@@ -41,4 +41,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    #criando o relacionamento ONE TO ONE
+
+    public function preference ()
+    {
+        return $this-> hasOne(Preference::class);
+    }
 }

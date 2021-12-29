@@ -1,0 +1,62 @@
+
+
+AULA: 05 - LARAVEL RELACIONAMENTO ONE TO ONE
+
+http://localhost/one-to-one
+
+1 dado pertentencente a 1 registro
+
+Criando factories
+
+Comandos:
+
+1- php artisan Tinker
+
+2- < path do model>::factory()->count(numero de registros)->create();
+
+    \App\Models\User::factory()->count(10)->create();
+
+
+Importando varios models na rota:
+
+    use App\Models\{
+    User,
+    Preference
+};
+
+RETORNANDO O PRIMEIRO USUARIO POR "FIRST"
+
+Route::get('/one-to-one', function () {
+    //$user = User::first(); -> pegando referencia pelo primeiro registros
+
+    $user = User::with('preference')->find(2); - encontrando o registro
+
+    $data = [
+        'background_color' => '#987'
+    ]; - armarzenando preferencia na variavel $data
+
+    if($user->preferences){
+        $user->preferences->update($data);
+    } else {
+        //$user->preferences()->create($data);
+
+        $preference = new Preference ($data);
+        $user->preference()->save ($preference);
+    }
+
+    $user->refresh();
+
+    var_dump($user->preference);
+
+    $user->preference->delete();
+
+    $user->refresh();
+
+    dd($user->preference);
+});
+
+
+
+
+
+
