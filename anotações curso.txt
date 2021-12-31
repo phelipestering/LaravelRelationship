@@ -1,3 +1,14 @@
+ERROS
+
+SQLSTATE[HY000] [1045] Access denied - e possivel erro de conexao no mysql workbench
+
+Pass
+
+sail down --rmi all -v | fora do containe, remover os container e versoes
+
+
+
+
 
 
 AULA: 05 - LARAVEL RELACIONAMENTO ONE TO ONE
@@ -54,6 +65,20 @@ Route::get('/one-to-one', function () {
 
     dd($user->preference);
 });
+
+
+
+AULA: 06 - LARAVEL RELACIONAMENTO ONE TO MANY (E INVERSO)
+
+Relacionamento 1 para muitos
+
+Models + Migrations
+
+php artisan make:model Curso -m
+
+php artisan make:model Modulo -m
+
+php artisan make:model Aula -m
 
 
 
