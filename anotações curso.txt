@@ -163,6 +163,11 @@ Route::get('/one-to-many', function () {
 });
 
 
+AULA: 07 - LARAVEL RELACIONAMENTOS MANY TO MANY
+
+
+
+
 
 
 
