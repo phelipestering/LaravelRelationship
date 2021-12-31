@@ -55,15 +55,20 @@ Route::get('/one-to-one', function () {
 Route::get('/one-to-many', function () {
     //$curso = Curso::create(['nome'=> 'Curso Relacionamento tabelas']);
 
-    $curso = Curso::first();
+    $curso = Curso::with('modulos.aulas')->first();
 
-    $data = [
-        'nome' => 'Modulo x1'
-    ];
 
-    $curso -> modulos()->create($data);
-    
-    $modulos = $curso -> modulos;
 
-    dd($modulos);
+    echo $curso->nome;
+    echo '<br>';
+    foreach ($curso->modulos as $modulo){
+        echo "Modulo{$modulo->nome} <br>";
+
+        foreach ($modulo->aulas as $aula){
+            echo "aula {$aula->nome} <br>";
+        }
+
+
+        dd($curso);
+    }
 });

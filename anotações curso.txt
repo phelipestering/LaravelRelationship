@@ -139,6 +139,30 @@ public function modulo()
     }
 
 
+comentando o codigo...
+
+Route::get('/one-to-many', function () {
+    //$curso = Curso::create(['nome'=> 'Curso Relacionamento tabelas']); - criando curso com o nome
+
+    $curso = Curso::with('modulos.aulas')->first(); -> fazendo a consulta do banco de dados usando o atributo "with" para que
+    a consulta seja melhor indexada
+
+    echo $curso->nome; -> imprimindo o nome do curso
+    echo '<br>';
+    foreach ($curso->modulos as $modulo){ -> capturando o curso, veha que foi definido a consulta com o first,
+    assim veio o primeiro curso
+        echo "Modulo{$modulo->nome} <br>"; - imprimiu o nome do modulo
+
+        foreach ($modulo->aulas as $aula){
+            echo "aula {$aula->nome} <br>";
+        }
+
+
+        dd($curso);
+    }
+});
+
+
 
 
 
