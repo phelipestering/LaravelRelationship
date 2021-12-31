@@ -13,4 +13,9 @@ class Curso extends Model
         'nome',
         'avaliacao'
     ];
+
+    public function modulos()
+    {
+        return $this -> hasMany(Modulo::class);
+    }
 }

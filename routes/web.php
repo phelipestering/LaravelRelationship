@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Models\{
+    Curso,
     User,
     Preference
 };
@@ -49,4 +50,20 @@ Route::get('/one-to-one', function () {
     $user->refresh();
 
     dd($user->preference);
+});
+
+Route::get('/one-to-many', function () {
+    //$curso = Curso::create(['nome'=> 'Curso Relacionamento tabelas']);
+
+    $curso = Curso::first();
+
+    $data = [
+        'nome' => 'Modulo x1'
+    ];
+
+    $curso -> modulos()->create($data);
+    
+    $modulos = $curso -> modulos;
+
+    dd($modulos);
 });

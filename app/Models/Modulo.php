@@ -13,4 +13,15 @@ class Modulo extends Model
         'curso_id',
         'nome'
     ];
+
+    public function curso()
+    {
+        return $this -> belongsTo(Curso::class);
+    }
+
+    public function aulas()
+    {
+        return $this -> hasMany(Aula::class);
+    }
+
 }

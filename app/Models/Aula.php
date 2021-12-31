@@ -14,4 +14,10 @@ class Aula extends Model
         'nome',
         'video'
     ];
+
+    public function modulo()
+    {
+        return $this -> belongsTo(Modulo::class);
+    }
+
 }

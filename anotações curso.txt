@@ -9,6 +9,7 @@ sail down --rmi all -v | fora do containe, remover os container e versoes
 
 
 
+***********************************************************************************************************
 
 
 AULA: 05 - LARAVEL RELACIONAMENTO ONE TO ONE
@@ -79,6 +80,65 @@ php artisan make:model Curso -m
 php artisan make:model Modulo -m
 
 php artisan make:model Aula -m
+
+CRIANDO O RELACIONAMENTO 1 PRA MUITOS NO MODELS
+
+no exemplo, 1 curso tem varios modulos.
+
+entao em curso, criamos um relacionamento hasmany para modulos.
+
+model cursos:
+
+public function modulos()
+    {
+        return $this -> hasMany(Modulo::class);
+    }
+
+Os mudulos pertencem a 1 curso, entao no model curso criado relacionamento 1 para 1 em Modulos
+
+abaixo informando que o modulo, pertence a 1 curso
+
+## model Modulos: ##
+
+definindo o relacionamento, temos o seguinte:
+
+** o Modulo se pertence a 01 curso
+
+public function curso()
+    {
+        return $this -> belongsTo(Curso::class);
+    }
+
+** O Modulo tem varias aulas
+
+    public function aulas()
+    {
+        return $this -> hasMany(Aula::class);
+    }
+
+## model Curso: ##
+
+definindo o relacionamento, temos o seguinte:
+
+** o Curso tem varios modulos
+
+public function modulos()
+    {
+        return $this -> hasMany(Modulo::class);
+    }
+
+## model Aula: ##
+
+definindo o relacionamento, temos o seguinte:
+
+** a Aula pertence a uma modulo
+
+public function modulo()
+    {
+        return $this -> belongsTo(Modulo::class);
+    }
+
+
 
 
 
