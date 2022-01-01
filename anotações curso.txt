@@ -165,11 +165,66 @@ Route::get('/one-to-many', function () {
 
 AULA: 07 - LARAVEL RELACIONAMENTOS MANY TO MANY
 
+Situacao: cada usuario tem varias permissoes e uma permissao possui um usuario.
+
+sendo o relacionamento:
+
+criados as tabelas pivo em permissoes criadas na migratiom "permissions"
+
+public function up()
+    {
+        Schema::create('permissions', function (Blueprint $table) { -> criacao de tabelas
+            $table->id();
+            $table->string('name')->unique(); - nomeando name como campo unico
+            $table->timestamps();
+        });
+
+        Schema::create('permission_user', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('permission_id')->constrained('permissions'); ## chave estrangeira ligando comunicando com o pemission ID
+            $table->foreignId('user_id')->constrained('users');
+            $table->boolean('active')->default(true);
+            $table->timestamps();
+        });
+    }
+
+public function down() ## metodo para deletar as tabelas
+    {
+        Schema::dropIfExists('permissions_user');
+        Schema::dropIfExists('permissions');
+    }
+
+## note acima que, a estrutura de delete tem que ser respeitada, sendo que primeiro deleta-se a tabela mais ˜fraca˜
+e na sequencia a tabela mais forte.
+
+RELACIONAMENTOS NOS Models
 
 
+NA MODEL PERMISSIONS....
+
+public function users ()
+    {
+        return $this-> belongsToMany(User::class);
+    }
+
+NA MODEL USERS....
+
+public function permissions ()
+    {
+        return $this-> belongsToMany(Permission::class);
+    }
 
 
+Teste nas rotas
 
+Route::get('/many-to-many', function () {
+
+    dd(Permission::create (['name'=>'menu 02']));
+
+});
+
+
+relacionamento 1 permissao com um usuario
 
 
 

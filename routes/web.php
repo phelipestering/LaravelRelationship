@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Models\{
     Curso,
+    Permission,
     User,
     Preference
 };
@@ -53,11 +54,10 @@ Route::get('/one-to-one', function () {
 });
 
 Route::get('/one-to-many', function () {
+
     //$curso = Curso::create(['nome'=> 'Curso Relacionamento tabelas']);
 
     $curso = Curso::with('modulos.aulas')->first();
-
-
 
     echo $curso->nome;
     echo '<br>';
@@ -68,7 +68,30 @@ Route::get('/one-to-many', function () {
             echo "aula {$aula->nome} <br>";
         }
 
-
         dd($curso);
     }
+});
+
+
+Route::get('/many-to-many', function () {
+
+    // dd(Permission::create (['name'=>'menu 02']));
+
+    $user = User::with('permissions')->find(1);
+
+    $permission = Permission::find(1);
+
+    //$user->permissions()->save($permission);
+
+    $user->permissions()->saveMany([
+
+        permission::find(1),
+        permission::find(2),
+        permission::find(3),
+    ]);
+
+    $user->refresh();
+
+    dd($user->permissions);
+
 });
