@@ -219,12 +219,62 @@ Teste nas rotas
 
 Route::get('/many-to-many', function () {
 
-    dd(Permission::create (['name'=>'menu 02']));
+    // dd(Permission::create (['name'=>'menu 02']));
+
+    $user = User::with('permissions')->find(1);
+
+    $permission = Permission::find(1);
+
+    //$user->permissions()->save($permission);
+
+    // $user->permissions()->saveMany([
+
+    //     permission::find(1),
+    //     permission::find(2),
+    //     permission::find(3),
+    // ]);
+
+    // $user->permissions()->sync([1]);
+
+  o Sync para Anexar Muitos para Muitos (many-to-many)
+Você pode também usar o método sync para anexar modelos relacionados. O método sync aceitar um array de IDs para alocar na tabela pivot. Depois que esta operação é completada, apenas os IDs no arrau irão ser intermediadas para a tabela do modelo:
+
+$user->roles()->sync([1, 2, 3]);
+Adicionado Dados ao Pivot Quando se está Sincronizando
+Você pode também associar outro valor de tabela pivot com os dados IDs:
+
+$user->roles()->sync([1 => ['expires' => true]]);
+
+
+
+
+Anexando Modelos Muitos Para Muitos (many-to-many)
+$user = User::find(1);
+
+$user->roles()->attach(1);
+Você pode também passar um array de atributos que devem ser armazenados na tabela pivot pra o relacionamento:
+
+$user->roles()->attach(1, ['expires' => $expires]);
+É claro que, o oposto do método attach é detach:
+
+$user->roles()->detach(1);
+Ambos attach e detach também pegam arrays de IDs como input:
+
+$user = User::find(1);
+
+$user->roles()->detach([1, 2, 3]);
+
+$user->roles()->attach([1 => ['attribute1' => 'value1'], 2, 3]);
+
+
+    // $user->permissions()->attach([1, 3]);
+    // $user->permissions()->detach([1, 3]);
+
+    $user->refresh();
+
+    dd($user->permissions);
 
 });
-
-
-relacionamento 1 permissao com um usuario
 
 
 

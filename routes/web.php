@@ -74,23 +74,20 @@ Route::get('/one-to-many', function () {
 
 
 Route::get('/many-to-many', function () {
-
-    // dd(Permission::create (['name'=>'menu 02']));
-
     $user = User::with('permissions')->find(1);
 
     $permission = Permission::find(1);
-
-    //$user->permissions()->save($permission);
-
+    $user->permissions()->save($permission);
     $user->permissions()->saveMany([
-
-        permission::find(1),
-        permission::find(2),
-        permission::find(3),
+        Permission::find(1),
+        Permission::find(3),
+        Permission::find(2),
     ]);
+    // $user->permissions()->sync([2]);
+    // $user->permissions()->attach([1, 3]);
+    //$user->permissions()->detach([1, 3]);
 
-    $user->refresh();
+    //$user->refresh();
 
     dd($user->permissions);
 
